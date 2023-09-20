@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useReducer } from "react";
+import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import {useForm} from 'react-hook-form';
 import { quizCreationSchema } from "@/schemas/form/quiz";
@@ -13,7 +13,7 @@ import { CopyCheck } from "lucide-react";
 import { Separator } from "./ui/separator";
 import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Props = [];
 

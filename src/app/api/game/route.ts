@@ -34,55 +34,54 @@ export async function POST(req: Request, res: Response) {
             topic,
             type,
         });
-        if (type == 'mcq') {
+        if (type === "mcq") {
             type mcqQuestion = {
-                question: string;
-                answer: string;
-                option1: string;
-                option2: string;
-                option3: string;
+              question: string;
+              answer: string;
+              option1: string;
+              option2: string;
+              option3: string;
+            };
+      
+            const manyData = data.questions.map((question: mcqQuestion) => {
+              // mix up the options lol
+              const options = [
+                question.option1,
+                question.option2,
+                question.option3,
+                question.answer,
+              ].sort(() => Math.random() - 0.5);
+              return {
+                question: question.question,
+                answer: question.answer,
+                options: JSON.stringify(options),
+                gameId: game.id,
+                questionType: "mcq",
               };
-        
-              const manyData = data.questions.map((question: mcqQuestion) => {
-                // mix up the options lol
-                const options = [
-                  question.option1,
-                  question.option2,
-                  question.option3,
-                  question.answer,
-                ].sort(() => Math.random() - 0.5);
+            });
+      
+            await prisma.question.createMany({
+              data: manyData,
+            });
+          } else if (type === "open_ended") {
+            type openQuestion = {
+              question: string;
+              answer: string;
+            };
+            await prisma.question.createMany({
+              data: data.questions.map((question: openQuestion) => {
                 return {
                   question: question.question,
                   answer: question.answer,
-                  options: JSON.stringify(options),
                   gameId: game.id,
-                  questionType: "mcq",
+                  questionType: "open_ended",
                 };
-              });
-        
-              await prisma.question.createMany({
-                data: manyData,
-              });
-        } else if (type === "open_ended") {
-            type openQuestion = {
-                question: string;
-                answer: string;
-              };
-              await prisma.question.createMany({
-                data: data.questions.map((question: openQuestion) => {
-                  return {
-                    question: question.question,
-                    answer: question.answer,
-                    gameId: game.id,
-                    questionType: "open_ended",
-                  };
-                }),
-              });
-            }
-        
-            return NextResponse.json({ gameId: game.id }, { status: 200 });
-        }
-    } catch (error) {
+              }),
+            });
+          }
+      
+          return NextResponse.json({ gameId: game.id }, { status: 200 });
+        } catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(
                 {
