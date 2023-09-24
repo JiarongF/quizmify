@@ -2,6 +2,7 @@ import { getAuthSession } from "@/lib/nextauth";
 import React from "react";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import OpenEnded from "@/components/OpenEnded";
 
 type Props = {
     params: {

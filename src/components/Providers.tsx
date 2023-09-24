@@ -8,19 +8,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-const Providers = ({ children, ...props } : ThemeProviderProps) => {
-    return(
-        <QueryClientProvider client={queryClient}>
-        <NextThemesProvider 
-        attribute="class" 
-        defaultTheme="system" 
-        enableSystem 
-        {...props}
-        >
-            <SessionProvider>{children}</SessionProvider>
+const Providers = ({ children }: ThemeProviderProps) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
+          <SessionProvider>{children}</SessionProvider>
         </NextThemesProvider>
-        </QueryClientProvider>
-    )
-};
-
-export default Providers;
+      </QueryClientProvider>
+    );
+  };
+  
+  export default Providers;

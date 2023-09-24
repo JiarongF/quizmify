@@ -10,6 +10,7 @@ type Props = {};
 
 export const metadata = {
     title: "Dashboard | Quizmify",
+    description: "Quiz yourself on anything!",
 };
 
 const DashBoard = async (props: Props) => {
