@@ -4,7 +4,6 @@ import React from "react";
 import { getAuthSession } from "@/lib/nextauth";
 import SignInButton from "./SignInButton";
 import UserAccountNav from "./UserAccountNav";
-import { ThemeProvider } from "next-themes";
 import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = async () => {
